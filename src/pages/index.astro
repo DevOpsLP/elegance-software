@@ -1,0 +1,31 @@
+---
+import Hero from '../components/Hero';
+import Logos from '../components/Logos';
+import BentoLayout from '../components/BentoComponent';
+import Products from '../components/ProductComponent';
+import EmailForm from '../components/EmailForm'
+import MainLayout from '../layouts/MainLayout.astro';
+import '../styles/global.css';
+import Services from '../components/Services';
+---
+<MainLayout >
+	<section id="home" class="lg:min-h-screen md:h-full lg:px-16 md:px-10 px-6">
+		<Hero client:load />
+	</section>
+	
+	<section id="about-us" class="min-h-screen h-full lg:px-16 md:px-10 px-6">
+		<Logos client:idle />
+		<BentoLayout client:idle />
+	</section>
+	
+	<section id="services" class="h-full lg:px-16 md:px-10 px-6">
+		<Services client:idle />
+	</section>
+	
+	<section id="products" class="h-full bg-black text-white md:rounded-t-4xl md:mt-0 mt-24 rounded-t-3xl ">
+		<Products client:idle />
+	</section>
+	<section id="contact-us">
+		<EmailForm client:idle/>
+	</section>
+</MainLayout>

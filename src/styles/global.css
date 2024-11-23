@@ -1,0 +1,174 @@
+/* frontend/src/styles/global.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply font-sans;
+  /* Applies Inter globally */
+}
+
+/* Position the second text below the first */
+.move-down {
+  position: absolute;
+  top: 100%;
+  /* Positioned outside the visible area */
+}
+
+/* The spin-container controls the movement */
+.spin-container {
+  transform: translate3d(0, 0, 0);
+  /* Default position */
+  will-change: transform;
+  transition: transform 0.5s ease-in-out;
+  /* Smooth animation */
+}
+
+/* On hover, move the container up */
+li:hover .spin-container {
+  transform: translate3d(0, -100%, 0);
+  /* Moves the container up by 100% */
+}
+
+.spin-container:hover {
+  transform: translate3d(0, -100%, 0);
+  /* Moves the container up by 100% */
+}
+
+
+/* The spin-container controls the movement */
+.spin-diagonal {
+  transform: translate3d(0, 0, 0);
+  /* Default position */
+  will-change: transform;
+  transition: transform 0.5s ease-in-out;
+  /* Smooth animation */
+}
+
+.spin-diagonal:hover {
+  transform: translate3d(100%, -100%, 0);
+  /* Moves the container diagonal */
+}
+
+
+/* Default Hidden State */
+.hidden-slide {
+  opacity: 0;
+  transform: translate3d(-25%, 0px, 0px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+/* Visible Animation */
+.slide-from-left {
+  opacity: 1;
+  transform: translate3d(0px, 0px, 0px);
+  animation: slideFromLeft 0.7s ease-out forwards;
+}
+
+/* Keyframes for Slide */
+@keyframes slideFromLeft {
+  from {
+    transform: translate3d(-25%, 0px, 0px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0px, 0px, 0px);
+    opacity: 1;
+  }
+}
+
+
+
+/* Slide from Right */
+@keyframes slideFromRight {
+  from {
+    transform: translate3d(25%, 0px, 0px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0px, 0px, 0px);
+    opacity: 1;
+  }
+}
+
+/* Utility Classes */
+.slide-from-right {
+  animation: slideFromRight 0.7s ease-out forwards;
+}
+
+/* Keyframes for scrolling from right to left */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Infinite Scroll Container */
+.infinite-scroll-container {
+  display: flex;
+  width: 400%;
+  /* Double the width for seamless scrolling */
+  animation: scroll-left 10s linear infinite;
+}
+
+/* Individual Text Block */
+.infinite-scroll-text {
+  flex: 0 0 80%;
+  /* Each text block takes up half the container's width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.7s ease-out forwards;
+}
+
+.outline-white {
+  color: #00000000;
+  -webkit-text-stroke-width: .1vw;
+  -webkit-text-stroke-color: #fff;
+}
+
+.outline-black {
+  color: #00000000;
+  -webkit-text-stroke-width: .1vw;
+  -webkit-text-stroke-color: #000;
+}
+
+.rounded-t-4xl{
+  border-top-left-radius: 10rem;
+  border-top-right-radius: 10rem;
+}
+
+.number-rotate {
+  transform: rotateY(180deg);
+  will-change: transform;
+  transition: transform 0.5s ease-in-out;
+  font-size: 8vw;
+}
+
+.rotate-active {
+  transform: rotateY(360deg);
+  animation-duration: 300ms;
+}
