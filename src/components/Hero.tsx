@@ -18,8 +18,8 @@ const Hero: React.FC = () => {
                     <h1 className="lg:text-hero text-7xl font-light italic uppercase">Grow</h1>
 
                     {/* Dividing Line */}
-                    <div className="border-b-8 border-primary-500 my-4 lg:w-3/5 md:w-64 w-52 -translate-y-8 transform -rotate-3 lg:-translate-y-12 md:-translate-y-10"></div>
-                    <p className="md:max-w-xl max-w-sm text-2xl font-light">
+                    <div className="border-b-8 border-primary-500 my-4 lg:w-2/5 md:w-64 w-52 -translate-y-8 transform -rotate-3 lg:-translate-y-10 md:-translate-y-10"></div>
+                    <p className="md:max-w-lg max-w-sm text-2xl font-light">
                         Get paid by listeners, <span className='font-normal italic'>every month</span>, predictably.<span className='font-normal italic'> No CPMs</span>, and <span className='font-normal italic'>no scheduling</span> required.
                     </p>
 

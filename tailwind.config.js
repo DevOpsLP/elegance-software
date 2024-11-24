@@ -10,7 +10,7 @@ export default {
   theme: {
     extend: {
       fontSize: {
-        'hero': ['8.5vw', {
+        'hero': ['7vw', {
           lineHeight: '1',
         }]
       },
