@@ -1,117 +1,116 @@
-import React, { useEffect, useRef, useState } from "react";
-
-interface ImageCard {
-  imageUrl: string;
-  title: string;
-  description: string;
-}
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 const Products: React.FC = () => {
-  const numbers = [
-    { number: "40K", caption: "Task automated" },
-    { number: "+10", caption: "Clients" },
-    { number: "20", caption: "Projects completed" },
-    { number: "30", caption: "Business managed" },
-  ];
+  const [activeTab, setActiveTab] = useState<"Industries" | "Use Cases">(
+    "Industries"
+  );
 
-  const imageCards: ImageCard[] = [
-    { imageUrl: "assets/hero-image.jpg", title: "EAZIBOT", description: "Focused on automation of complex tasks for your company" },
-    { imageUrl: "assets/hero-image.jpg", title: "ScheduleX", description: "Focused on automation of complex tasks for your company" },
-    { imageUrl: "assets/hero-image.jpg", title: "DocHive", description: "Focused on automation of complex tasks for your company" },
-  ];
+  const numbers = {
+    Industries: [
+      { number: "3", caption: "Healthcare Platforms" },
+      { number: "2", caption: "Marketing Solutions" },
+      { number: "1", caption: "Real Estate Platform" },
+    ],
+    "Use Cases": [
+      { number: "5", caption: "Automations Delivered" },
+      { number: "10M+", caption: "Transactions Processed" },
+      { number: "4", caption: "Dynamic Interfaces Deployed" },
+    ],
+  };
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set());
-  const [headingVisible, setHeadingVisible] = useState(false);
-  const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set());
-
-  useEffect(() => {
-    // Determine threshold for mobile vs desktop
-    const threshold = window.innerWidth <= 768 ? 0.5 : 0.8;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.target.hasAttribute("data-index")) {
-            const index = parseInt(entry.target.getAttribute("data-index") || "0", 10);
-            if (entry.isIntersecting) {
-              setVisibleItems((prev) => new Set([...prev, index]));
-            }
-          }
-
-          if (entry.target.getAttribute("data-heading") === "heading" && entry.isIntersecting) {
-            setHeadingVisible(true);
-          }
-
-          if (entry.target.getAttribute("data-card-index") && entry.isIntersecting) {
-            const index = parseInt(entry.target.getAttribute("data-card-index") || "0", 10);
-            setVisibleCards((prev) => new Set([...prev, index]));
-          }
-        });
-      },
-      { threshold }
-    );
-
-    const items = containerRef.current?.querySelectorAll(
-      ".grid-item, [data-heading], [data-card-index]"
-    ) || [];
-    items.forEach((item) => observer.observe(item));
-
-    return () => observer.disconnect();
-  }, []);
+  const tabs = Object.keys(numbers);
 
   return (
-    <div ref={containerRef} className="pt-32 lg:px-32 md:px-10 px-6">
-      {/* Numbers Section */}
-      <div className="grid grid-cols-2 md:grid-rows-2 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-1 gap-12 lg:gap-32 mb-52">
-        {numbers.map((item, index) => (
-          <div
-            key={index}
-            data-index={index}
-            className="grid-item flex flex-col items-center justify-center text-center"
-          >
-            <div
-              className={`number-rotate ${
-                visibleItems.has(index) ? "rotate-active" : ""
+    <div className="max-w-7xl mx-auto py-16 ">
+
+      {/* Tabs for Numbers Section */}
+      <div className="flex justify-center mb-12">
+        {tabs.map((tab, index) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab as "Industries" | "Use Cases")}
+            className={`px-8 py-4 text-lg md:text-xl font-medium transition-colors duration-300 ${activeTab === tab
+                ? "bg-primary-500 text-black"
+                : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+              } ${index === 0
+                ? "rounded-l-lg" // Round the left border of the first button
+                : index === tabs.length - 1
+                  ? "rounded-r-lg" // Round the right border of the last button
+                  : "" // Middle buttons have no rounded edges
               }`}
-            >
-              {item.number}
-            </div>
-            <div className="text-3xl text-slate-300">{item.caption}</div>
-          </div>
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
+      {/* Numbers Section */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-24">
+        {numbers[activeTab].map((item, index) => (
+          <motion.div
+            key={index}
+            className="flex flex-col items-center justify-center text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.2 }}
+          >
+            <h2 className="text-6xl font-bold text-primary-500">{item.number}</h2>
+            <p className="text-xl text-gray-300 mt-4">{item.caption}</p>
+          </motion.div>
         ))}
       </div>
 
       {/* Heading Section */}
-      <div
-        data-heading="heading"
-        className={`flex justify-between items-end mb-12 transition-all duration-700 transform ${
-          headingVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+      <motion.div
+        className="flex justify-between items-end mb-12 transition-all duration-700 transform"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
       >
         <h1 className="text-5xl font-light tracking-wide">Know about our products</h1>
-        <h2 className="text-xl tracking-wider font-light">Learn about the best products for your business</h2>
-      </div>
+        <h2 className="text-xl tracking-wider font-light text-gray-400">
+          Learn about the best products for your business
+        </h2>
+      </motion.div>
 
-      {/* Border Animation */}
-      <div
-        className={`border mb-24 border-b-2 border-white w-full mx-auto transition-all duration-700 ${
-          headingVisible ? "scale-x-100" : "scale-x-0"
-        } origin-center`}
-      ></div>
+      {/* Divider */}
+      <motion.div
+        className="border mb-24 border-b-2 border-primary-500 w-full mx-auto"
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      ></motion.div>
 
-      {/* Cards Section */}
-      <div className="mt-6 grid md:grid-cols-3 md:grid-rows-1 grid-cols-1 grid-cols-row-3 gap-6">
-        {imageCards.map((card, index) => (
-          <div
+      {/* Product Cards Section */}
+      <div className="grid md:grid-cols-3 grid-cols-1 gap-6">
+        {[
+          {
+            imageUrl: "assets/hero-image.jpg",
+            title: "EAZIBOT",
+            description: "Automates complex workflows to save time and reduce costs for businesses.",
+          },
+          {
+            imageUrl: "assets/hero-image.jpg",
+            title: "ScheduleX",
+            description: "Streamlines scheduling for teams, ensuring efficiency and scalability.",
+          },
+          {
+            imageUrl: "assets/hero-image.jpg",
+            title: "DocHive",
+            description: "Simplifies document management with secure and dynamic interfaces.",
+          },
+        ].map((card, index) => (
+          <motion.div
             key={index}
-            data-card-index={index}
-            className={`flex flex-col justify-center group transition-all duration-700 transform ${
-              visibleCards.has(index) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-            }`}
+            className="flex flex-col justify-center group transition-all duration-700 transform"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
           >
             <div
-              className="w-full h-[500px] rounded-3xl bg-cover bg-center relative block"
+              className="w-full h-[400px] rounded-3xl bg-cover bg-center relative"
               style={{
                 backgroundImage: `url('${card.imageUrl}')`,
               }}
@@ -121,14 +120,13 @@ const Products: React.FC = () => {
               </div>
             </div>
             <div className="flex justify-between items-center mt-4">
-              <h2 className="text-2xl">{card.title}</h2>
-              <button className="p-3 bg-primary-500 rounded-3xl transform transition hover:scale-105">
+              <h2 className="text-2xl font-medium">{card.title}</h2>
+              <button className="p-3 bg-primary-500 text-black rounded-3xl transform transition hover:scale-105">
                 LEARN MORE
               </button>
             </div>
-            <div className="border-b-2 border border-slate-200 w-full mt-4"></div>
-            <p className="text-slate-300 mt-4">{card.description}</p>
-          </div>
+            <p className="text-gray-400 mt-4">{card.description}</p>
+          </motion.div>
         ))}
       </div>
     </div>

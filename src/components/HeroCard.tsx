@@ -19,7 +19,7 @@ const HeroCard: React.FC = () => {
   }, [texts.length]);
 
   return (
-    <div className="bg-primary-500 p-6 rounded-2xl flex flex-col md:w-52 lg:w-64 h-24 md:h-24 lg:h-32 overflow-hidden relative text-white">
+    <div className="bg-primary-500 p-6 rounded-2xl flex flex-col md:w-52 lg:w-64 h-24 md:h-24  overflow-hidden relative text-white">
       <div className="relative w-full h-full">
         {/* Current Text */}
         <h3

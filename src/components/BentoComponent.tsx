@@ -26,7 +26,7 @@ const BentoLayout: React.FC = () => {
   return (
     <div
       ref={groupRef}
-      className="grid grid-cols-1 gap-6 md:grid-rows-2 md:grid-cols-2 md:py-12 xl:px-32 xl:pt-32 lg:min-h-[800px] lg:mt-0 mt-20"
+      className="grid grid-cols-1 gap-6 md:grid-rows-2 md:grid-cols-2 md:py-12 xl:px-32 lg:min-h-[800px] mt-24"
     >
       {/* Large Section */}
       <div
