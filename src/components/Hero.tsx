@@ -2,7 +2,22 @@ import React from 'react';
 import HeroCard from './HeroCard';
 import HeroImage from './HeroImage';
 
-const Hero: React.FC = () => {
+interface HeroProps{
+    sub_header: string;
+    header1: string;
+    header2: string;
+    header3: string;
+    hero_image: string;
+}
+
+const Hero: React.FC<HeroProps> = ({
+        sub_header,
+        header1,
+        header2,
+        header3,
+        hero_image
+    }: HeroProps) => {
+
     return (
         <div className="w-full md:mb-24 lg:mb-0">
             <div className="md:flex md:flex-row flex-col gap-x-10">
@@ -11,11 +26,11 @@ const Hero: React.FC = () => {
                     {/* Main Heading */}
                     <div className='flex items-center gap-x-3 my-4'>
                         <img src="assets/code.svg" alt="Code elegant software" className='w-12 h-12' />
-                        <h1 className='text-2xl font-light font-mono'>Software development</h1>
+                        <h1 className='text-2xl font-light font-mono'>{sub_header}</h1>
                     </div>
-                    <h1 className="lg:text-hero text-7xl font-bold uppercase">Automate</h1>
-                    <h1 className="lg:text-hero text-7xl font-bold uppercase">Optimize</h1>
-                    <h1 className="lg:text-hero text-7xl font-light italic uppercase">Grow</h1>
+                    <h1 className="lg:text-hero text-7xl font-bold uppercase">{header1}</h1>
+                    <h1 className="lg:text-hero text-7xl font-bold uppercase">{header2}</h1>
+                    <h1 className="lg:text-hero text-7xl font-light italic uppercase">{header3}</h1>
 
                     {/* Dividing Line */}
                     <div className="border-b-8 border-primary-500 my-4 lg:w-2/5 md:w-64 w-52 -translate-y-8 transform -rotate-3 lg:-translate-y-10 md:-translate-y-10"></div>
@@ -33,7 +48,7 @@ const Hero: React.FC = () => {
                     </div>
                 </div>
 
-               <HeroImage />
+               <HeroImage image_url={hero_image} />
 
             </div>
         </div>

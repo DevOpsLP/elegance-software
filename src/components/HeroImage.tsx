@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const HeroImage: React.FC = () => {
+interface HeroImageProps{
+  image_url: string;
+}
+const HeroImage: React.FC<HeroImageProps> = ({
+  image_url
+}) => {
   const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const imageRef = useRef<HTMLDivElement | null>(null);
@@ -61,7 +66,7 @@ const HeroImage: React.FC = () => {
       <div
         className="w-full h-[500px] md:h-full mt-12 rounded-r-3xl bg-cover bg-center relative"
         style={{
-          backgroundImage: `url('assets/hero-image.jpg')`,
+          backgroundImage: `url('${import.meta.env.STRAPI_URL}${image_url}')`,
         }}
       >
         {/* Top-left Cutout Image */}

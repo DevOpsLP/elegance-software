@@ -1,7 +1,25 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const Services: React.FC = () => {
+interface image{
+  name: string;
+  url: string;
+}
+interface Service{
+  image1: image;
+  image2: image;
+  sub_header1: string;
+  sub_header2: string;
+  header1: string;
+  header2: string;
+  description1: string;
+  description2: string;
+}
+
+interface ServiceProps{
+  services: Service;
+}
+const Services: React.FC<ServiceProps> = ({services}) => {
   return (
     <div className="flex flex-col gap-16 md:p-8 md:mt-0 mt-24 xl:p-20 overflow-hidden">
       {/* First Section: Image Background | Text */}
@@ -16,7 +34,7 @@ const Services: React.FC = () => {
         <motion.div
           className="lg:min-h-[700px] min-h-[500px] rounded-xl shadow-lg relative"
           style={{
-            backgroundImage: "url('assets/service.jpg')",
+            backgroundImage: `url('${import.meta.env.STRAPI_URL}${services.image1.url}')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -42,14 +60,12 @@ const Services: React.FC = () => {
             <span className="bg-primary-500 rounded-full flex justify-center items-center p-2">
               <img src="assets/scale-up.svg" alt="scale" className="w-6 h-6" />
             </span>
-            EXPERTS
+            {services.sub_header1}
           </h2>
           <h1 className="xl:text-7xl text-5xl leading-tight font-normal mb-4">
-            Secure and Easy to Use
+            {services.header1}
           </h1>
-          <p className="text-xl md:text-xl max-w-lg text-gray-600 mb-6">
-            We craft secure and intuitive software tailored to your business needs, delivering a fast and seamless experience.
-          </p>
+          <p className="text-xl md:text-xl max-w-lg text-gray-600 mb-6">{services.description1}</p>
           <button className="bg-primary-500 text-white py-3 px-6 text-lg rounded-lg hover:bg-primary-600">
             Learn More
           </button>
@@ -68,7 +84,7 @@ const Services: React.FC = () => {
           <motion.div
           className="lg:min-h-[700px] min-h-[500px] rounded-xl shadow-lg relative md:hidden"
           style={{
-            backgroundImage: "url('assets/service-2.jpg')",
+            backgroundImage: `url('${import.meta.env.STRAPI_URL}${services.image2.url}')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -93,14 +109,12 @@ const Services: React.FC = () => {
             <span className="bg-primary-500 rounded-full flex justify-center items-center p-2">
               <img src="assets/clock.svg" alt="clock" className="w-6 h-6" />
             </span>
-            Fast Automation
+            {services.sub_header2}
           </h2>
           <h1 className="xl:text-7xl text-5xl tracking-wide leading-tight font-normal mb-4">
-            Complex Yet Seamless to Use
+          {services.header2}
           </h1>
-          <p className="text-xl md:text-xl max-w-lg text-gray-600 mb-6">
-            Harness cutting-edge technology to accelerate your business growth with scalable, seamless tools.
-          </p>
+          <p className="text-xl md:text-xl max-w-lg text-gray-600 mb-6">{services.description1}</p>
           <button className="bg-primary-500 text-white py-3 px-6 text-lg rounded-lg hover:bg-primary-600">
             Learn More
           </button>
@@ -110,7 +124,7 @@ const Services: React.FC = () => {
         <motion.div
           className="lg:min-h-[700px] min-h-[500px] rounded-xl shadow-lg relative hidden md:block"
           style={{
-            backgroundImage: "url('assets/service-2.jpg')",
+            backgroundImage: `url('${import.meta.env.STRAPI_URL}${services.image2.url}')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

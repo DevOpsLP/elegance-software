@@ -1,33 +1,50 @@
 ---
-import Hero from '../components/Hero';
-import ValueProposition from '../components/ValueProposition';
-import Products from '../components/ProductComponent';
-import EmailForm from '../components/EmailForm'
-import MainLayout from '../layouts/MainLayout.astro';
-import '../styles/global.css';
-import Services from '../components/Services';
-import WhyUs from '../components/Whyus';
+import Hero from "../components/Hero";
+import ValueProposition from "../components/ValueProposition";
+import Products from "../components/ProductComponent";
+import EmailForm from "../components/EmailForm";
+import MainLayout from "../layouts/MainLayout.astro";
+import "../styles/global.css";
+import Services from "../components/Services";
+import { query } from "../utils/strapi";
+const data = await query(
+  "homepage?populate[0]=hero.hero_image&populate[1]=ValueProposition.svg1&populate[2]=ValueProposition.svg2&populate[3]=ValueProposition.svg3&populate[4]=ValueProposition.svg4&populate[5]=Services.image1&populate[6]=Services.image2&populate[7]=TabItems&populate[8]=Products.thumbnail"
+);
+const { sub_header, header1, header2, header3, hero_image } = data.data.hero;
 ---
-<MainLayout >
-	<section id="home" class="h-full lg:px-16 md:px-10 px-6">
-		<Hero client:load />
-	</section>
-	
-	<section id="about-us" class="h-full mt-24 md:mt-32 lg:px-16 md:px-10 px-6 pb-16">
-		<div class="overflow-hidden">
-			<ValueProposition client:idle />
-		</div>
 
-	</section>
+<MainLayout>
+  <section id="home" class="h-full lg:px-16 md:px-10 px-6">
+    <Hero
+      sub_header={sub_header}
+      header1={header1}
+      header2={header2}
+      header3={header3}
+	    hero_image={hero_image.formats.medium.url}
+      client:load
+    />
+  </section>
 
-	<section id="services" class="h-full lg:px-16 md:px-10 px-6">
-		<Services client:idle />
-	</section>
-	
-	<section id="products" class="h-full bg-black text-white md:rounded-t-4xl md:mt-0 mt-24 rounded-t-4xl ">
-		<Products client:idle />
-	</section>
-	<section id="contact-us">
-		<EmailForm client:idle/>
-	</section>
+  <section
+    id="about-us"
+    class="h-full mt-24 md:mt-32 lg:px-16 md:px-10 px-6 "
+  >
+    <div class="overflow-hidden">
+      <ValueProposition valueProposition={data.data.ValueProposition} client:idle />
+    </div>
+  </section>
+
+  <section id="services" class="h-full lg:px-16 md:px-10 px-6">
+    <Services services={data.data.Services} client:idle />
+  </section>
+
+  <section
+    id="products"
+    class="h-full bg-black text-white md:rounded-t-4xl md:mt-0 mt-24 rounded-t-4xl"
+  >
+    <Products tabItems={data.data.TabItems} products={data.data.Products} client:idle />
+  </section>
+  <section id="contact-us">
+    <EmailForm client:idle />
+  </section>
 </MainLayout>

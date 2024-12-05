@@ -1,25 +1,37 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+interface TabItem {
+  id: number;
+  tab: string;
+  number: string;
+  caption: string;
+}
 
-const Products: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<"Industries" | "Use Cases">(
-    "Industries"
+interface Thumbnail{
+  name: string;
+  url: string;
+}
+
+interface Products{
+  thumbnail: Thumbnail;
+  title: string;
+  description: string;
+  slug: string;
+}
+
+
+interface TabsProps {
+  tabItems: TabItem[];
+  products: Products[];
+}
+
+const Products: React.FC<TabsProps> = ({ tabItems, products }) => {
+  const [activeTab, setActiveTab] = useState<string>(
+    tabItems[0]?.tab || "" // Default to the first tab
   );
 
-  const numbers = {
-    Industries: [
-      { number: "3", caption: "Healthcare Platforms" },
-      { number: "2", caption: "Marketing Solutions" },
-      { number: "1", caption: "Real Estate Platform" },
-    ],
-    "Use Cases": [
-      { number: "5", caption: "Automations Delivered" },
-      { number: "10M+", caption: "Transactions Processed" },
-      { number: "4", caption: "Dynamic Interfaces Deployed" },
-    ],
-  };
-
-  const tabs = Object.keys(numbers);
+  // Get unique tab names
+  const tabs = [...new Set(tabItems.map((item) => item.tab))];
 
   return (
     <div className="max-w-7xl mx-auto py-16 ">
@@ -47,18 +59,22 @@ const Products: React.FC = () => {
 
       {/* Numbers Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-24">
-        {numbers[activeTab].map((item, index) => (
-          <motion.div
-            key={index}
-            className="flex flex-col items-center justify-center text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: index * 0.2 }}
-          >
-            <h2 className="text-6xl font-bold text-primary-500">{item.number}</h2>
-            <p className="text-xl text-gray-300 mt-4">{item.caption}</p>
-          </motion.div>
-        ))}
+        {tabItems
+          .filter((item) => item.tab === activeTab)
+          .map((item, index) => (
+            <motion.div
+              key={item.id}
+              className="flex flex-col items-center justify-center text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+            >
+              <h2 className="text-6xl font-bold text-primary-500">
+                {item.number}
+              </h2>
+              <p className="text-xl text-gray-300 mt-4">{item.caption}</p>
+            </motion.div>
+          ))}
       </div>
 
       {/* Heading Section */}
@@ -85,23 +101,7 @@ const Products: React.FC = () => {
 
       {/* Product Cards Section */}
       <div className="grid md:grid-cols-3 grid-cols-1 gap-6">
-        {[
-          {
-            imageUrl: "assets/hero-image.jpg",
-            title: "EAZIBOT",
-            description: "Automates complex workflows to save time and reduce costs for businesses.",
-          },
-          {
-            imageUrl: "assets/hero-image.jpg",
-            title: "ScheduleX",
-            description: "Streamlines scheduling for teams, ensuring efficiency and scalability.",
-          },
-          {
-            imageUrl: "assets/hero-image.jpg",
-            title: "DocHive",
-            description: "Simplifies document management with secure and dynamic interfaces.",
-          },
-        ].map((card, index) => (
+        {products.map((card, index) => (
           <motion.div
             key={index}
             className="flex flex-col justify-center group transition-all duration-700 transform"
@@ -112,7 +112,7 @@ const Products: React.FC = () => {
             <div
               className="w-full h-[400px] rounded-3xl bg-cover bg-center relative"
               style={{
-                backgroundImage: `url('${card.imageUrl}')`,
+                backgroundImage: `url('${import.meta.env.STRAPI_URL}${card.thumbnail.url}')`,
               }}
             >
               <div className="p-2 group-hover:bg-black transition-colors bg-primary-500 absolute top-10 right-10 rounded-full">
