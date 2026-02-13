@@ -42,7 +42,7 @@ const Hero: React.FC<HeroProps> = ({
                     <div className="flex flex-col md:flex-row gap-6 mt-8">
                         <HeroCard />
                         {/* Card 2 */}
-                        <button className="bg-black text-white p-6 h-24 md:h-24 lg:h-24 rounded-2xl flex flex-col md:w-44 lg:w-64 justify-center items-center">
+                        <button className="bg-black text-white p-6 h-24 md:h-24 lg:h-24 rounded-2xl flex flex-col w-full md:w-44 lg:w-64 justify-center items-center">
                             <h3 className="text-2xl font-bold text-center">GET IN TOUCH</h3>
                         </button>
                     </div>

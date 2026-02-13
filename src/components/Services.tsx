@@ -1,11 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { getImageUrl } from "../utils/imageUrl";
 
-interface image{
+interface image {
   name: string;
   url: string;
 }
-interface Service{
+interface Service {
   image1: image;
   image2: image;
   sub_header1: string;
@@ -16,10 +17,10 @@ interface Service{
   description2: string;
 }
 
-interface ServiceProps{
+interface ServiceProps {
   services: Service;
 }
-const Services: React.FC<ServiceProps> = ({services}) => {
+const Services: React.FC<ServiceProps> = ({ services }) => {
   return (
     <div className="flex flex-col gap-16 md:p-8 md:mt-0 mt-24 xl:p-20 overflow-hidden">
       {/* First Section: Image Background | Text */}
@@ -32,9 +33,9 @@ const Services: React.FC<ServiceProps> = ({services}) => {
       >
         {/* Image as Background */}
         <motion.div
-          className="lg:min-h-[700px] min-h-[500px] rounded-xl shadow-lg relative"
+          className="lg:min-h-[700px] min-h-[500px] rounded-xl relative"
           style={{
-            backgroundImage: `url('${import.meta.env.STRAPI_URL}${services.image1.url}')`,
+            backgroundImage: `url('${getImageUrl(services.image1.url)}')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -80,11 +81,11 @@ const Services: React.FC<ServiceProps> = ({services}) => {
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-          {/* Image as Background */}
-          <motion.div
-          className="lg:min-h-[700px] min-h-[500px] rounded-xl shadow-lg relative md:hidden"
+        {/* Image as Background */}
+        <motion.div
+          className="lg:min-h-[700px] min-h-[500px] rounded-xl relative md:hidden"
           style={{
-            backgroundImage: `url('${import.meta.env.STRAPI_URL}${services.image2.url}')`,
+            backgroundImage: `url('${getImageUrl(services.image2.url)}')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -112,7 +113,7 @@ const Services: React.FC<ServiceProps> = ({services}) => {
             {services.sub_header2}
           </h2>
           <h1 className="xl:text-7xl text-5xl tracking-wide leading-tight font-normal mb-4">
-          {services.header2}
+            {services.header2}
           </h1>
           <p className="text-xl md:text-xl max-w-lg text-gray-600 mb-6">{services.description1}</p>
           <button className="bg-primary-500 text-white py-3 px-6 text-lg rounded-lg hover:bg-primary-600">
@@ -122,9 +123,9 @@ const Services: React.FC<ServiceProps> = ({services}) => {
 
         {/* Image as Background */}
         <motion.div
-          className="lg:min-h-[700px] min-h-[500px] rounded-xl shadow-lg relative hidden md:block"
+          className="lg:min-h-[700px] min-h-[500px] rounded-xl relative hidden md:block"
           style={{
-            backgroundImage: `url('${import.meta.env.STRAPI_URL}${services.image2.url}')`,
+            backgroundImage: `url('${getImageUrl(services.image2.url)}')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

@@ -6,11 +6,131 @@ import EmailForm from "../components/EmailForm";
 import MainLayout from "../layouts/MainLayout.astro";
 import "../styles/global.css";
 import Services from "../components/Services";
-import { query } from "../utils/strapi";
-const data = await query(
-  "homepage?populate[0]=hero.hero_image&populate[1]=ValueProposition.svg1&populate[2]=ValueProposition.svg2&populate[3]=ValueProposition.svg3&populate[4]=ValueProposition.svg4&populate[5]=Services.image1&populate[6]=Services.image2&populate[7]=TabItems&populate[8]=Products.thumbnail"
-);
-const { sub_header, header1, header2, header3, hero_image } = data.data.hero;
+
+const placeholderData = {
+  hero: {
+    sub_header: "Redefine efficiency",
+    header1: "Automate",
+    header2: "Optimize",
+    header3: "Grow",
+    hero_image: {
+      formats: {
+        medium: {
+          url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=80",
+        },
+      },
+    },
+  },
+  ValueProposition: {
+    title: "Why Choose Elegant Software?",
+    sub_title:
+      "From automating tasks to optimizing growth, we build software that scales seamlessly.",
+    header1: "Powerful Yet Elegant",
+    header2: "Secure Yet Easy",
+    header3: "Complex Yet Seamless",
+    header4: "Scalable for Growth",
+    description1:
+      "Harness cutting-edge technology while keeping interfaces intuitive and user-friendly.",
+    description2:
+      "We prioritize security without compromising the ease of use for end users.",
+    description3:
+      "Manage complexity under the hood while keeping workflows seamless and smooth.",
+    description4:
+      "Solutions designed to grow with your business and handle millions of users.",
+    svg1: {
+      name: "innovation",
+      url: "https://api.iconify.design/heroicons:light-bulb.svg?color=%23000000&width=64&height=64",
+    },
+    svg2: {
+      name: "quality",
+      url: "https://api.iconify.design/heroicons:check-badge.svg?color=%23000000&width=64&height=64",
+    },
+    svg3: {
+      name: "speed",
+      url: "https://api.iconify.design/heroicons:bolt.svg?color=%23000000&width=64&height=64",
+    },
+    svg4: {
+      name: "support",
+      url: "https://api.iconify.design/heroicons:heart.svg?color=%23000000&width=64&height=64",
+    },
+  },
+  Services: {
+    sub_header1: "EXPERTS",
+    header1: "Secure and Easy to Use",
+    description1:
+      "We craft secure and intuitive software tailored to your business needs, delivering a fast and seamless experience.",
+    image1: {
+      name: "web-dev",
+      url: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
+    },
+    sub_header2: "FAST AUTOMATION",
+    header2: "Complex Yet Seamless to Use",
+    description2:
+      "Harness cutting-edge technology to accelerate your business growth with scalable, seamless tools.",
+    image2: {
+      name: "mobile-dev",
+      url: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80",
+    },
+  },
+  TabItems: [
+    { id: 1, tab: "Industries", number: "3", caption: "Healthcare Platforms" },
+    { id: 2, tab: "Industries", number: "2", caption: "Marketing Solutions" },
+    { id: 3, tab: "Industries", number: "1", caption: "Real Estate Platform" },
+    { id: 4, tab: "Use Cases", number: "5", caption: "Automations Delivered" },
+    {
+      id: 5,
+      tab: "Use Cases",
+      number: "10M+",
+      caption: "Transactions Processed",
+    },
+  ],
+  Products: [
+    {
+      id: 1,
+      title: "Marketing Service",
+      description:
+        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+      thumbnail: {
+        name: "marketing-service",
+        url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+      },
+      slug: "marketing-service",
+    },
+    {
+      id: 2,
+      title: "Automation",
+      description:
+        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+      thumbnail: {
+        name: "automation",
+        url: "https://images.unsplash.com/photo-1472851294608-41551b116d4e?auto=format&fit=crop&w=800&q=80",
+      },
+      slug: "automation",
+    },
+    {
+      id: 3,
+      title: "Healthcare",
+      description:
+        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+      thumbnail: {
+        name: "healthcare",
+        url: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&w=800&q=80",
+      },
+      slug: "healthcare",
+    },
+  ],
+};
+
+const pageData = placeholderData;
+
+const hero = pageData.hero;
+const { sub_header, header1, header2, header3 } = hero;
+const hero_image_url = hero.hero_image.formats.medium.url;
+
+const valuePropositionData = pageData.ValueProposition;
+const servicesData = pageData.Services;
+const tabItemsData = pageData.TabItems;
+const productsData = pageData.Products;
 ---
 
 <MainLayout>
@@ -20,29 +140,26 @@ const { sub_header, header1, header2, header3, hero_image } = data.data.hero;
       header1={header1}
       header2={header2}
       header3={header3}
-	    hero_image={hero_image.formats.medium.url}
+      hero_image={hero_image_url}
       client:load
     />
   </section>
 
-  <section
-    id="about-us"
-    class="h-full mt-24 md:mt-32 lg:px-16 md:px-10 px-6 "
-  >
+  <section id="about-us" class="h-full mt-24 md:mt-32 lg:px-16 md:px-10 px-6">
     <div class="overflow-hidden">
-      <ValueProposition valueProposition={data.data.ValueProposition} client:idle />
+      <ValueProposition valueProposition={valuePropositionData} client:idle />
     </div>
   </section>
 
   <section id="services" class="h-full lg:px-16 md:px-10 px-6">
-    <Services services={data.data.Services} client:idle />
+    <Services services={servicesData} client:idle />
   </section>
 
   <section
     id="products"
     class="h-full bg-black text-white md:rounded-t-4xl md:mt-0 mt-24 rounded-t-4xl"
   >
-    <Products tabItems={data.data.TabItems} products={data.data.Products} client:idle />
+    <Products tabItems={tabItemsData} products={productsData} client:idle />
   </section>
   <section id="contact-us">
     <EmailForm client:idle />

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { getImageUrl } from "../utils/imageUrl";
 
-interface HeroImageProps{
+interface HeroImageProps {
   image_url: string;
 }
 const HeroImage: React.FC<HeroImageProps> = ({
@@ -54,19 +55,18 @@ const HeroImage: React.FC<HeroImageProps> = ({
   return (
     <div
       ref={imageRef}
-      className={`md:w-1/2 w-full relative ${
-        isMobile
+      className={`md:w-1/2 w-full relative ${isMobile
           ? isVisible
             ? 'slide-from-left'
             : 'hidden-slide'
           : 'slide-from-left'
-      }`}
+        }`}
     >
       {/* Main Hero Background Image */}
       <div
         className="w-full h-[500px] md:h-full mt-12 rounded-r-3xl bg-cover bg-center relative"
         style={{
-          backgroundImage: `url('${import.meta.env.STRAPI_URL}${image_url}')`,
+          backgroundImage: `url('${getImageUrl(image_url)}')`,
         }}
       >
         {/* Top-left Cutout Image */}

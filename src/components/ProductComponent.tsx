@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { getImageUrl } from "../utils/imageUrl";
+
 interface TabItem {
   id: number;
   tab: string;
@@ -7,12 +9,12 @@ interface TabItem {
   caption: string;
 }
 
-interface Thumbnail{
+interface Thumbnail {
   name: string;
   url: string;
 }
 
-interface Products{
+interface Products {
   thumbnail: Thumbnail;
   title: string;
   description: string;
@@ -43,8 +45,8 @@ const Products: React.FC<TabsProps> = ({ tabItems, products }) => {
             key={tab}
             onClick={() => setActiveTab(tab as "Industries" | "Use Cases")}
             className={`px-8 py-4 text-lg md:text-xl font-medium transition-colors duration-300 ${activeTab === tab
-                ? "bg-primary-500 text-black"
-                : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+              ? "bg-primary-500 text-black"
+              : "bg-gray-800 text-gray-400 hover:bg-gray-700"
               } ${index === 0
                 ? "rounded-l-lg" // Round the left border of the first button
                 : index === tabs.length - 1
@@ -112,7 +114,7 @@ const Products: React.FC<TabsProps> = ({ tabItems, products }) => {
             <div
               className="w-full h-[400px] rounded-3xl bg-cover bg-center relative"
               style={{
-                backgroundImage: `url('${import.meta.env.STRAPI_URL}${card.thumbnail.url}')`,
+                backgroundImage: `url('${getImageUrl(card.thumbnail.url)}')`,
               }}
             >
               <div className="p-2 group-hover:bg-black transition-colors bg-primary-500 absolute top-10 right-10 rounded-full">
